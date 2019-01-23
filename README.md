@@ -5,7 +5,7 @@ This repository hosts a simple website where the user can convert between variou
 
 I wrote this converter in Python many years ago when I was fed up of converting Earth masses to Jupiter masses, and I thought it was time I put it somewhere online.  
 
-It's a simple HTML page with the conversion driven by some (vanilla) Javascript.  You can visit it [here](www.dh4gan.github.io/exo-units)
+It's a simple HTML page with the conversion driven by some (vanilla) Javascript.  You can visit it [here](dh4gan.github.io/exo-units)
 
 There are some slightly unorthodox units in the converter, which I have found handy in the past for outreach work.  If you want to add more, submit a pull request!
 
