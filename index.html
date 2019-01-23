@@ -10,30 +10,38 @@
     
     <body>
 
-    <p id = "ask"> Question should be here </p>
-    
-    <div id="answersbox"> </div>
-    <br>
-    
-    <div id="buttonarray">
-    <button id="submitbutton" onclick="getQuestionAnswer()"> Submit </button>
-    <button id="backbutton" onclick="goBack()">Back </button>
-    </div>
-    
-    <p id="confirm"> </p>
-    
-    <div id = "spaces">
-    <br>
-    <br>
-    </div>
 
-    <p id="explainbox"> </p>
+      <div class="grid-container" id="questionarray">
 
-    <h2 id="resultheader" style="visibility:hidden"> Results (rounded to 7 decimal places) </h2>
+	<p class="grid-item"  id="typequestion">Select Unit Type </p>
+	<p class="grid-item" id="unitquestion" style="visibility:hidden">Select Unit </p>
+	<p class="grid-item" id="valuequestion" style="visibility:hidden">Enter Value </p>
+	
+	<h2 class="grid-item" id="resultheader" style="visibility:hidden"> Results </h2>
 
-    <div id="results" </p>
-   
+	
+
+	<div class="grid-item" id="typebox"> </div>
+	<div class="grid-item" id="unitbox"> </div>
+	<div class="grid-item" id="valuebox"> </div>
+
+	<div class="grid-item" id="results"> </div>
+
+	
+	<button id="submitType" onclick="getUnitList()"> Select Type </button>
+	<button id="submitUnit" onclick="getUnit()" style="visibility:hidden"> Select Unit </button>
+	<button id="submitValue" onclick="doConversion()"  style="visibility:hidden"> Do Conversion </button>
+
+      </div>
     
+      <p id="confirm"> </p>
+    
+      <div id = "spaces">
+	<br>
+	<br>
+      </div>
+
+      <p id="explainbox"> </p>  
 
 
 <!--Javascript stuff -->
