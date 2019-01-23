@@ -18,9 +18,9 @@ var unit_type_question = {
 
 // Distance Variables
 
-var distance_choices = ["cm", "m", "Moon Radii", "Mars Radii", "Earth Radii", "Neptune Radii", "Jupiter Radii", "Solar Radii", "AU", "parsecs", "kiloparsecs", "megaparsecs"];
+var distance_choices = ["cm", "m", "km", "Moon Radii", "Mars Radii", "Earth Radii", "Neptune Radii", "Saturn Radii", "Jupiter Radii", "Solar Radii", "AU", "parsecs", "kiloparsecs", "megaparsecs"];
 
-var distance_values = [1.0, 100.0, 1.73814e8, 3.396e8, 6.371e8, 2.4764e9, 6.0268e9, 7.1492e9, 6.995e10, 1.496e13, 3.08568e18, 3.08568e21, 3.08568e24];
+var distance_values = [1.0, 100.0, 1.0e5, 1.73814e8, 3.396e8, 6.371e8, 2.4764e9, 6.0268e9, 7.1492e9, 6.995e10, 1.496e13, 3.08568e18, 3.08568e21, 3.08568e24];
 
 var distance_dict = {};
 distance_choices.forEach((key,i) => distance_dict[key] = distance_values[i]);
@@ -112,8 +112,17 @@ function getUnitList(){
 	console.log("HERE");
 	askMultiChoice(questionset[typeChoice],"unitbox", "unitquestion");
 
+	document.getElementById("unitquestion").style.visibility="visible";
 	document.getElementById("submitUnit").style.visibility="visible";
+	document.getElementById("resultheader").style.visibility="hidden";
 	clearBox("confirm");
+	clearBox("valuebox");
+	clearBox("results");
+
+	document.getElementById("submitValue").style.visibility="hidden";
+	document.getElementById("valuequestion").style.visibility="hidden";
+
+	
     }
 }
 
@@ -129,6 +138,8 @@ function getUnit(){
 	}
 
 	document.getElementById("submitValue").style.visibility="visible";
+	document.getElementById("valuequestion").style.visibility="visible";
+	document.getElementById("valuequestion").innerHTML = "Enter "+typeChoice;
 	clearBox("confirm");
     }
 }
@@ -180,7 +191,7 @@ function doConversion(){
 	var i;
 	for (i=0; i< labels.length; i++)
 	{
-	    var convertedValue = cgs_value/dictionary[labels[i]].toExponential();
+	    var convertedValue = (cgs_value/dictionary[labels[i]]).toExponential(5);
 	    answerString = answerString + labels[i]+":&emsp; "+convertedValue+"<br>";
 	}
 	
