@@ -18,9 +18,9 @@ var unit_type_question = {
 
 // Distance Variables
 
-var distance_choices = ["cm", "m", "double decker buses", "blue whales", "km", "Moon Radii", "Mars Radii", "Earth Radii", "Neptune Radii", "Saturn Radii", "Jupiter Radii", "Solar Radii", "AU", "parsecs", "kiloparsecs", "megaparsecs", "attoparsecs"];
+var distance_choices = ["cm", "m", "double decker buses", "blue whales", "km", "Moon Radii", "Mars Radii", "Earth Radii", "Neptune Radii", "Saturn Radii", "Jupiter Radii", "Solar Radii", "AU", "parsecs", "kiloparsecs", "megaparsecs", "gigaparsecs", "attoparsecs"];
 
-var distance_values = [1.0, 100.0, 1865.0, 2500.0, 1.0e5, 1.73814e8, 3.396e8, 6.371e8, 2.4764e9, 6.0268e9, 7.1492e9, 6.995e10, 1.496e13, 3.08568e18, 3.08568e21, 3.08568e24, 3.08568];
+var distance_values = [1.0, 100.0, 1865.0, 2500.0, 1.0e5, 1.73814e8, 3.396e8, 6.371e8, 2.4764e9, 6.0268e9, 7.1492e9, 6.995e10, 1.496e13, 3.08568e18, 3.08568e21, 3.08568e24, 3.08568e27, 3.08568];
 
 var distance_dict = {};
 distance_choices.forEach((key,i) => distance_dict[key] = distance_values[i]);
@@ -104,7 +104,7 @@ function startQuiz() {
 function getUnitList(){
 
     
-    typeChoice = getMultiChoiceAnswer(unit_type_question, "typequestion");
+    typeChoice = getMultiChoiceAnswer(questionset["Type"], "typequestion");
 
     console.log(typeChoice);
     if(typeChoice!=undefined)
