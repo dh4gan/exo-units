@@ -152,6 +152,8 @@ function doConversion(){
      *
      */
 
+
+    clearBox("confirm");
     var entryValue = 0.0;
 
     console.log(entryValue);
@@ -278,6 +280,22 @@ function askTextBox(question, boxID, elementName){
     textBox.setAttribute('name', boxString);
     textBox.setAttribute('id',boxString);
     textBox.setAttribute('value', 0);
+    textBox.setAttribute('onClick',searchKeyPress);
+
+    // Get the input field
+    var input = document.getElementById("myInput");
+
+    
+    // Execute a function when the user releases a key on the keyboard
+    textBox.addEventListener("keyup", function(event) {
+	// Cancel the default action, if needed
+	event.preventDefault();
+	// Number 13 is the "Enter" key on the keyboard
+	if (event.keyCode === 13) {
+	    // Trigger the button element with a click
+	    document.getElementById("submitValue").click();
+	}
+    });
     
     document.getElementById(boxID).appendChild(textBox);
 }
@@ -292,3 +310,4 @@ function clearBox(elementID)
 function round(value, decimals) {
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
+
