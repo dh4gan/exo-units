@@ -18,9 +18,9 @@ var unit_type_question = {
 
 // Distance Variables
 
-var distance_choices = ["cm", "m", "km", "Moon Radii", "Mars Radii", "Earth Radii", "Neptune Radii", "Saturn Radii", "Jupiter Radii", "Solar Radii", "AU", "parsecs", "kiloparsecs", "megaparsecs"];
+var distance_choices = ["cm", "m", "double decker buses", "blue whales", "km", "Moon Radii", "Mars Radii", "Earth Radii", "Neptune Radii", "Saturn Radii", "Jupiter Radii", "Solar Radii", "AU", "parsecs", "kiloparsecs", "megaparsecs", "attoparsecs"];
 
-var distance_values = [1.0, 100.0, 1.0e5, 1.73814e8, 3.396e8, 6.371e8, 2.4764e9, 6.0268e9, 7.1492e9, 6.995e10, 1.496e13, 3.08568e18, 3.08568e21, 3.08568e24];
+var distance_values = [1.0, 100.0, 1865.0, 2500.0, 1.0e5, 1.73814e8, 3.396e8, 6.371e8, 2.4764e9, 6.0268e9, 7.1492e9, 6.995e10, 1.496e13, 3.08568e18, 3.08568e21, 3.08568e24, 3.08568];
 
 var distance_dict = {};
 distance_choices.forEach((key,i) => distance_dict[key] = distance_values[i]);
@@ -35,8 +35,8 @@ var distance_question = {text: "Select Current Distance Unit:",
 
 // Mass Variables
 
-var mass_choices = ["g", "kg", "Moon Masses", "Mars Masses", "Earth Masses", "Neptune Masses", "Saturn Masses", "Jupiter Masses", "Solar Masses"];
-var mass_values = [1.0, 1000.0, 7.3477e25, 6.4185e26, 5.9736e27, 1.024e29, 5.6834e29, 1.8986e30, 1.988920e33];
+var mass_choices = ["g", "kg", "double decker buses", "blue whales", "Moon Masses", "Mars Masses", "Earth Masses", "Neptune Masses", "Saturn Masses", "Jupiter Masses", "Solar Masses"];
+var mass_values = [1.0, 1000.0, 8.0e7, 1.4e8, 7.3477e25, 6.4185e26, 5.9736e27, 1.024e29, 5.6834e29, 1.8986e30, 1.988920e33];
 
 var mass_dict = {};
 mass_choices.forEach((key,i) => mass_dict[key] = mass_values[i]);
@@ -52,8 +52,8 @@ var mass_question = {text: "Select Current Mass Unit:",
 
 // Time Variables
 
-var time_choices = ["seconds", "minutes", "hours", "days", "Martian sols", "weeks", "years", "Martian years", "Jovian years"];
-var time_values = [1.0, 60.0, 3600.0, 86400.0, 88775.244, 604800.0, 31556926.0, 59354294.4 , 374335776.0];
+var time_choices = ["seconds", "minutes", "hours", "days", "Martian sols", "weeks", "years", "Martian years", "Brexits", "Jovian years"];
+var time_values = [1.0, 60.0, 3600.0, 86400.0, 88775.244, 604800.0, 31556926.0, 59354294.4, 8.7264e7, 374335776.0];
 
 var time_dict = {};
 time_choices.forEach((key,i) => time_dict[key] = time_values[i]);
