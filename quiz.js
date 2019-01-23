@@ -3,19 +3,8 @@
 * Runs the quiz, and records all answers along with Q, J, delta and R
 */
 
-
-// Variables to hold the question data //
-var questionset;
-
-var previousKey = "";
-var questionKey="Type";
-var typeChoice="";
+var typeChoice = "";
 var unitChoice = "";
-
-var answers = ["","",0.0];
-var qID = 0;
-var nQ=3;
-
 
 
 // Unit selection question
@@ -93,7 +82,6 @@ var questionset = {"Type": unit_type_question, "Distance": distance_question, "M
 
 // Function that drives the quiz
 
-
 startQuiz();
 
 
@@ -109,71 +97,163 @@ function startQuiz() {
      * Begins the quiz
      */
 
-    console.log(questionKey)
-    
-    askQuestion(questionKey);
+    askMultiChoice(questionset["Type"], "typebox", "typequestion");
 }
 
 
+function getUnitList(){
+
+    
+    typeChoice = getMultiChoiceAnswer(unit_type_question, "typequestion");
+
+    console.log(typeChoice);
+    if(typeChoice!=undefined)
+    {
+	console.log("HERE");
+	askMultiChoice(questionset[typeChoice],"unitbox", "unitquestion");
+
+	document.getElementById("submitUnit").style.visibility="visible";
+	clearBox("confirm");
+    }
+}
+
+function getUnit(){
+
+    unitChoice = getMultiChoiceAnswer(questionset[typeChoice],"unitquestion");
+
+    if (unitChoice!=undefined)
+    {
+	if(document.getElementById("tbox") == undefined)
+	{
+	    askTextBox(questionset["Value"], "valuebox","valuequestion");
+	}
+
+	document.getElementById("submitValue").style.visibility="visible";
+	clearBox("confirm");
+    }
+}
 
 
-function askQuestion(questionkey) {
+function doConversion(){
+
     /*
-     * Asks a question - decides which type to ask
+     * Calculates the unit Conversion and displays to screen
+     *
      */
-    
-    question = questionset[questionKey];
 
-    console.log(question, questionKey, question.qtype)
-    
-    // Clear previous question
-    clearBox("answersbox");
-    
-    // Set new question text
-    document.getElementById("ask").innerHTML = question.text;
-    
-    // Get either radio buttons for multiple choice or text box
-    if (question.qtype=='multichoice')
+    var entryValue = 0.0;
+
+    console.log(entryValue);
+    // get value in textbox
+    try
+    {
+	console.log(document.getElementById("tbox").value);
+	entryValue = Number(document.getElementById("tbox").value);// Get value of textbox
+
+	console.log(entryValue);
+	if (isNaN(entryValue)) throw "Not a valid number - try again";												}
+	catch(err)
 	{
-	    askMultiChoice(question);
-	}
-    
-    else if (question.qtype =='textbox')
-	{
-	    askTextBox(question);
+	    if(err!="TypeError")
+	    {
+		document.getElementById("confirm").innerHTML = err;
+		return;
+	    }
 	}
 
-    document.getElementById("explainbox").innerHTML = question.explainertext;
-    
+	// Get all unit labels and values
+	
+	var dictionary = questionset[typeChoice].dictionary;
+	var labels = questionset[typeChoice].choices;
+	var allvalues = questionset[typeChoice].values;
+	
+	console.log(entryValue);
+	
+	// Convert user entry into cgs
+	
+	var cgs_value = entryValue*dictionary[unitChoice];
+	
+	
+	// Now convert into each available unit
+	
+	var answerString = "Input: "+entryValue+" "+unitChoice +"<br><br>"  ;
+	var i;
+	for (i=0; i< labels.length; i++)
+	{
+	    var convertedValue = cgs_value/dictionary[labels[i]].toExponential();
+	    answerString = answerString + labels[i]+":&emsp; "+convertedValue+"<br>";
+	}
+	
+	document.getElementById("resultheader").style.visibility = "visible";
+	
+	
+	document.getElementById("results").innerHTML = answerString;
+	console.log(answerString);
+	
+	
+	console.log(cgs_value, unitChoice,dictionary[unitChoice]);
+	
+	//
+
 }
 
 
-function askMultiChoice(question){
+function askMultiChoice(question,boxID, questionName){
     /*
      * sets up a multiple choice question
      */
+
+
+    clearBox(boxID);
     
     // Create radio buttons for possible choices
     for (i=0; i< question.choices.length; i++){
-	console.log("HERE")
+
 	
 	var choiceLabel = document.createElement('label');
 	choiceLabel.setAttribute('name', 'label'+String(i+1));
 	var choiceRadioButton = document.createElement('input');
-	var choiceString = 'multichoice';
+	var choiceString = questionName;
 	
 	choiceRadioButton.setAttribute('type', 'radio');
 	choiceRadioButton.setAttribute('name', choiceString);
 	
 	choiceLabel.appendChild(choiceRadioButton);
-	choiceLabel.appendChild(document.createTextNode(question.choices[i]));
+	choiceLabel.appendChild(document.createTextNode(' '+question.choices[i]));
 	choiceLabel.appendChild(document.createElement('br'));
 	
-	document.getElementById("answersbox").appendChild(choiceLabel);
+	document.getElementById(boxID).appendChild(choiceLabel);
     }
+
+    
 }
 
-function askTextBox(question){
+
+
+function getMultiChoiceAnswer(question, elementName){
+
+    var buttonList = document.getElementsByName(elementName);
+    choice = -10;
+
+    for (i=0; i < buttonList.length; i++)
+    {	
+	var ischecked = buttonList[i].checked;
+	if(ischecked) choice = i;
+    }
+
+    console.log("Choice is ", choice, buttonList.length);
+    
+    if(choice==-10){
+	document.getElementById("confirm").innerHTML = "Please select an option before continuing";
+	return undefined;
+    }
+    else
+	return question.choices[choice];
+}
+
+
+
+function askTextBox(question, boxID, elementName){
     /*
      * Sets up a question with a text box for answering
      */
@@ -188,199 +268,8 @@ function askTextBox(question){
     textBox.setAttribute('id',boxString);
     textBox.setAttribute('value', 0);
     
-    document.getElementById("answersbox").appendChild(textBox);
+    document.getElementById(boxID).appendChild(textBox);
 }
-
-
-function getQuestionAnswer(){
-    /*
-     * Interrogates page for question answer
-     * Either sets up next question
-     * Or calculates total from this question set
-     */
-    
-    document.getElementById("confirm").innerHTML = "";
-    currentQuestion = questionset[questionKey];
-    
-    
-    console.log("getting question answer");
-    
-    qtype = currentQuestion.qtype;
-    choice = -1;
-    
-    
-    // If question multichoice, then obtain which radio button was ticked
-    if(qtype=="multichoice")
-	{
-	    nchoices = currentQuestion.choices.length;
-	    var buttonList = document.getElementsByName("multichoice");
-	    choice = -10;
-	    for (i=0; i < nchoices; i++)
-		{
-		    
-		    var ischecked = buttonList[i].checked;
-		    if(ischecked) choice = i;
-		}
-	    
-        
-	    if(choice==-10)
-		{
-		    document.getElementById("confirm").innerHTML = "Please select an option before continuing"
-			return;
-		}
-
-
-	    previousKey = questionKey;
-	    if(questionKey=="Type")
-	    {
-		questionKey = currentQuestion.values[choice];
-		typeChoice = questionKey;
-	    }
-	    else
-	    {
-		unitChoice = currentQuestion.choices[choice];
-		questionKey = "Value";
-	    }
-
-	    answers[qID] = questionKey;
-	    
-	}
-    
-    // Else if question textbox, obtain value from textbox and check it for veracity
-    else if(qtype=="textbox")
-	{
-	    try
-		{
-		    answers[qID] = Number(document.getElementById("tbox").value);// Get value of textbox
-		    
-		    if (isNaN(answers[qID])) throw "Not a valid number - try again";
-		    if (answers[qID]<currentQuestion.minimum) throw "Number too low - try again";
-		    if (answers[qID]>currentQuestion.maximum) throw "Number too high - try again"
-														}
-	    catch(err)
-		{
-		    if(err!="TypeError")
-			{
-			    document.getElementById("confirm").innerHTML = err;
-			    return;
-			}
-		}
-	    
-	}
-    
-    
-    
-    console.log("Answer is "+answers[qID]);
-
-    //  update the question ID
-    qID++;
-    
-    
-    // If we haven't run out of questions, ask the next one
-    if(qID <nQ)
-	{
-	    askQuestion(questionKey);
-	    
-	    // Otherwise, calculate the total from this section and move on
-	}
-    
-    else
-	{
-	    console.log("Entry Complete");
-	    doConversion();
-	    
-	}
-    
-}
-
-
-function goBack()
-{
-    /*
-     * Goes back a question
-     */
-
-
-    // Don't go back if we're at the first question
-
-    if (qID==0){
-	return;
-    }
-    
-    // Set question ID back one
-
-    qID--;
-    questionKey=previousKey;
-
-    // Delete current answer value
-    answers[qID]=0.0;
-
-    // Ask this question
-    askQuestion(questionKey);
-
-}
-
-
-
-function doConversion(){
-
-    /*
-     * Calculates the unit Conversion and displays to screen
-     *
-     */
-
-
-    // Get all unit labels and values
-
-    var dictionary = questionset[typeChoice].dictionary;
-    
-    var labels = questionset[typeChoice].choices;
-    
-    var allvalues = questionset[typeChoice].values;
-
-    
-    var entryvalue = answers[nQ-1];
-
-    console.log(entryvalue);
-
-    // Convert user entry into cgs
-
-    var cgs_value = entryvalue*dictionary[unitChoice];
-
-
-    // Now convert into each available unit
-
-    var answerString = "";
-    var i;
-    for (i=0; i< labels.length; i++)
-    {
-	var convertedValue = cgs_value/dictionary[labels[i]].toExponential();
-	answerString = answerString + labels[i]+":&emsp; "+convertedValue+"<br>";
-    }
-
-    document.getElementById("resultheader").style.visibility = "visible";
-    document.getElementById("submitbutton").style.visibility = "hidden";
-    document.getElementById("backbutton").style.visibility = "hidden";
-    
-    
-    document.getElementById("results").innerHTML = answerString;
-    console.log(answerString);
-    
-    
-    console.log(cgs_value, unitChoice,dictionary[unitChoice]);
-    
-    //
-   
-
-
-    
-    
-
-    
-
-}
-
-
 
 
 function clearBox(elementID)
