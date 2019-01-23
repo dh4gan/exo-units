@@ -280,7 +280,6 @@ function askTextBox(question, boxID, elementName){
     textBox.setAttribute('name', boxString);
     textBox.setAttribute('id',boxString);
     textBox.setAttribute('value', 0);
-    textBox.setAttribute('onClick',searchKeyPress);
 
     // Get the input field
     var input = document.getElementById("myInput");
