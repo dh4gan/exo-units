@@ -1,6 +1,5 @@
-/* Javascript to run the Rio 2.0 Questionnaire
-* Written by dh4gan (01-Aug-2017)
-* Runs the quiz, and records all answers along with Q, J, delta and R
+/* Javascript to run the exoplanet unit converter
+* Written by dh4gan (23-Jan-2019)
 */
 
 var typeChoice = "";
@@ -18,9 +17,9 @@ var unit_type_question = {
 
 // Distance Variables
 
-var distance_choices = ["cm", "m", "double decker buses", "blue whales", "km", "Moon Radii", "Mars Radii", "Earth Radii", "Neptune Radii", "Saturn Radii", "Jupiter Radii", "Solar Radii", "AU", "parsecs", "kiloparsecs", "megaparsecs", "gigaparsecs", "attoparsecs"];
+var distance_choices = ["cm", "inches","m", "double decker buses", "blue whales", "km","miles", "Moon Radii", "Mars Radii", "Earth Radii", "Neptune Radii", "Saturn Radii", "Jupiter Radii", "Solar Radii", "AU", "lightyears", "parsecs", "kiloparsecs", "megaparsecs", "gigaparsecs", "attoparsecs"];
 
-var distance_values = [1.0, 100.0, 1865.0, 2500.0, 1.0e5, 1.73814e8, 3.396e8, 6.371e8, 2.4764e9, 6.0268e9, 7.1492e9, 6.995e10, 1.496e13, 3.08568e18, 3.08568e21, 3.08568e24, 3.08568e27, 3.08568];
+var distance_values = [1.0, 2.54, 100.0, 1865.0, 2500.0, 1.0e5, 160934.4, 1.73814e8, 3.396e8, 6.371e8, 2.4764e9, 6.0268e9, 7.1492e9, 6.995e10, 1.496e13, 9.461e17,3.08568e18, 3.08568e21, 3.08568e24, 3.08568e27, 3.08568];
 
 var distance_dict = {};
 distance_choices.forEach((key,i) => distance_dict[key] = distance_values[i]);

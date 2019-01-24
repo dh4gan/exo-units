@@ -12,7 +12,7 @@ There are some slightly unorthodox units in the converter, which I have found ha
 Distance Units
 -
 
-cm, m, km
+cm, m, km, miles
 
 double decker buses, blue whales
 
@@ -20,7 +20,7 @@ Moon/Mars/Earth/Neptune/Saturn/Jupiter/Solar Radii
 
 AU
 
-parsecs (pc),  kpc, Mpc, Gpc, attoparsecs
+lightyears, parsecs (pc),  kpc, Mpc, Gpc, attoparsecs
 
 Defined in `distance_choices`, `distance_values` in `quiz.js`
 
